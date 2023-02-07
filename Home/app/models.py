@@ -34,12 +34,8 @@ class Experience(models.Model):
 
 
 class Language(models.Model):
-    FLUENCY = (
-        ('Native', 'Native'),
-        ('Professional', 'Professional')
-    )
     l_name = models.CharField(max_length=20)
-    fluency = models.CharField(max_length=30, choices=FLUENCY)
+    fluency = models.CharField(max_length=30,null=True,blank=True)
 
 
 class Interest(models.Model):

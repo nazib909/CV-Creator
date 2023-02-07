@@ -8,7 +8,7 @@ from django.contrib.auth.models import User, auth
 
 
 def cv(request):
-    return render(request, 'cv_edit.html')
+    return render(request, 'cv.html')
 
 
 def login(request):
@@ -19,7 +19,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect(cv)
+            return redirect(createCV)
         else:
             messages.success(request, 'Login failed')
             return redirect(login)
