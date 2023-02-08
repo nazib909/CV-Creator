@@ -8,7 +8,12 @@ from django.contrib.auth.models import User, auth
 
 
 def cv(request):
-    return render(request, 'cv.html')
+    profile=Profile.objects.filter(
+        user=request.user
+    ).last()
+    return render(request, 'cv.html',{
+        'profile':profile
+    })
 
 
 def login(request):
@@ -19,7 +24,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect(createCV)
+            return redirect('createProf')
         else:
             messages.success(request, 'Login failed')
             return redirect(login)
@@ -53,7 +58,7 @@ def registration(request):
 def createCV(request):
     if request.method == 'POST':
         name = request.POST['name']
-        image = request.POST['image']
+        image = request.FILES['image']
         carrier_profile = request.POST['carrier_profile']
         # education
         degree1 = request.POST['degree1']
@@ -64,8 +69,8 @@ def createCV(request):
         passingyear2 = request.POST['passingyear2']
 
         edus = Edu.objects.bulk_create(
-            Edu(degree=degree1, institution=institute1, passingyear=passingyear1),
-            Edu(degree=degree2, institution=institute2, passingyear=passingyear2)
+            [Edu(degree=degree1, institution=institute1, passingyear=passingyear1),
+             Edu(degree=degree2, institution=institute2, passingyear=passingyear2)]
         )
         # skill
         skill1 = request.POST['skill1']
@@ -82,12 +87,12 @@ def createCV(request):
         proficiency6 = request.POST['proficiency6']
 
         skills = Skill.objects.bulk_create(
-            Skill(s_name=skill1, proficiency=proficiency1),
-            Skill(s_name=skill2, proficiency=proficiency2),
-            Skill(s_name=skill3, proficiency=proficiency3),
-            Skill(s_name=skill4, proficiency=proficiency4),
-            Skill(s_name=skill5, proficiency=proficiency5),
-            Skill(s_name=skill6, proficiency=proficiency6)
+            [Skill(s_name=skill1, proficiency=proficiency1),
+             Skill(s_name=skill2, proficiency=proficiency2),
+             Skill(s_name=skill3, proficiency=proficiency3),
+             Skill(s_name=skill4, proficiency=proficiency4),
+             Skill(s_name=skill5, proficiency=proficiency5),
+             Skill(s_name=skill6, proficiency=proficiency6)]
         )
         # project
         projectname1 = request.POST['projectname1']
@@ -99,10 +104,10 @@ def createCV(request):
         projectname4 = request.POST['projectname4']
         pdetails4 = request.POST['pdetails4']
         projects = Project.objects.bulk_create(
-            Project(p_name=projectname1, des=pdetails1),
-            Project(p_name=projectname2, des=pdetails2),
-            Project(p_name=projectname3, des=pdetails3),
-            Project(p_name=projectname4, des=pdetails4),
+            [Project(p_name=projectname1, des=pdetails1),
+             Project(p_name=projectname2, des=pdetails2),
+             Project(p_name=projectname3, des=pdetails3),
+             Project(p_name=projectname4, des=pdetails4)]
         )
         # experience
         title1 = request.POST['title1']
@@ -114,10 +119,10 @@ def createCV(request):
         duration2 = request.POST['duration2']
         details2 = request.POST['details2']
         experiences = Experience.objects.bulk_create(
-            Experience(j_title=title1, c_name=companyname1,
-                       duration=duration1, des=details1,),
-            Experience(j_title=title2, c_name=companyname2,
-                       duration=duration2, des=details2),
+            [Experience(j_title=title1, c_name=companyname1,
+                        duration=duration1, des=details1,),
+             Experience(j_title=title2, c_name=companyname2,
+                        duration=duration2, des=details2)]
         )
         # language
         language1 = request.POST['language1']
@@ -127,34 +132,39 @@ def createCV(request):
         language3 = request.POST['language3']
         fluency3 = request.POST['fluency3']
         languages = Language.objects.bulk_create(
-            Language(l_name=language1,fluency=fluency1),
-            Language(l_name=language2,fluency=fluency2)
+            [Language(l_name=language1, fluency=fluency1),
+             Language(l_name=language2, fluency=fluency2),
+             Language(l_name=language3, fluency=fluency3)]
         )
-        #interest
-        interest1=request.POST['interest1']
-        interest2=request.POST['interest2']
-        interest3=request.POST['interest3']
+        # interest
+        interest1 = request.POST['interest1']
+        interest2 = request.POST['interest2']
+        interest3 = request.POST['interest3']
         interests = Interest.objects.bulk_create(
-            Interest(i_name=interest1),
-            Interest(i_name=interest2),
-            Interest(i_name=interest3),
+            [Interest(i_name=interest1),
+             Interest(i_name=interest2),
+             Interest(i_name=interest3)]
         )
-        #contact
-        email=request.POST['email']
-        phone=request.POST['phone']
-        portfolio=request.POST['portfolio']
-        linkedin=request.POST['linkedin']
-        github=request.POST['github']
-        twitter=request.POST['twitter']
-        contacts = Contact.objects.bulk_create(
-            Contact(email=email,phone=phone,portfolio=portfolio,linkedin=linkedin,github=github,twitter=twitter)
-        )
-        
-        user = request.user
-        Profile = Profile.create(name=name, image=image, carrier_profile=carrier_profile, edus=edus, skills=skills,
-                             projects=projects, experiences=experiences, languages=languages, interests=interests, contacts=contacts, user=user)
+        # contact
+        email = request.POST['email']
+        phone = request.POST['phone']
+        portfolio = request.POST['portfolio']
+        linkedin = request.POST['linkedin']
+        github = request.POST['github']
+        twitter = request.POST['twitter']
+        contacts = Contact.objects.create(
+            email=email, phone=phone, portfolio=portfolio, linkedin=linkedin, github=github, twitter=twitter)
 
-    return render(request, 'cv.html')
+        user = request.user
+        profile = Profile.objects.create(name=name, image=image, carrier_profile=carrier_profile, user=user, contacts=contacts)
+        profile.edus.set(edus)
+        profile.skills.set(skills)
+        profile.projects.set(projects)
+        profile.experiences.set(experiences)
+        profile.languages.set(languages)
+        profile.interests.set(interests)
+
+    return redirect('cv')
 
 
 def createProf(request):
