@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, auth
 
 # Create your views here.
 
-
+@login_required
 def cv(request):
     profile=Profile.objects.filter(
         user=request.user
@@ -170,6 +170,13 @@ def createCV(request):
 def createProf(request):
     return render(request, 'cv_edit.html')
 
+def setting(request):
+    return render(request, 'setting.html')
 
 def forgot(request):
     return render(request, 'forgot.html')
+
+def logout(request):
+    auth.logout(request)
+    messages.success(request,'Logout Successfully')
+    return redirect(login)
