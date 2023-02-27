@@ -12,4 +12,6 @@ urlpatterns = [
     path('createCV/', createCV, name='createCV'),
     path('setting/', setting, name='setting'),
     path('logout/', logout, name='logout'),
+    path('delete/<id>/', delete, name='delete'),
+    path('password/',changePassword, name='changePassword')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

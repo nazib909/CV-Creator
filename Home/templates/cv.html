@@ -36,7 +36,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{user.username}}</a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Setting</a></li>
+                  <li><a class="dropdown-item" href="{% url 'setting' %}">Setting</a></li>
                   <li><a class="dropdown-item" href="{% url 'createProf' %}">Edit CV</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
@@ -50,19 +50,19 @@
     <div class="wrapper mt-lg-5">
         <div class="sidebar-wrapper">
             <div class="profile-container">
-                <img class="profile img-fluid" src="{{profile.image.url}}" alt="" />
+                <img class="profile img-fluid rounded-circle" src="{{profile.image.url}}" alt="" />
                 <h1 class="name">{{profile.name}}</h1>
                 <h3 class="tagline">Full Stack Developer</h3>
             </div><!--//profile-container-->
             
             <div class="contact-container container-block">
                 <ul class="list-unstyled contact-list">
-                    <li class="email"><i class="fa-solid fa-envelope"></i><a href="#">alan.doe@website.com</a></li>
-                    <li class="phone"><i class="fa-solid fa-phone"></i><a href="#">0123 456 789</a></li>
-                    <li class="website"><i class="fa-solid fa-globe"></i><a href="" target="_blank">portfoliosite.com</a></li>
-                    <li class="linkedin"><i class="fa-brands fa-linkedin-in"></i><a href="#" target="_blank">linkedin.com/in/alandoe</a></li>
-                    <li class="github"><i class="fa-brands fa-github"></i><a href="#" target="_blank">github.com/username</a></li>
-                    <li class="twitter"><i class="fa-brands fa-twitter"></i><a href="https://twitter.com/3rdwave_themes" target="_blank">@twittername</a></li>
+                    <li class="email"><i class="fa-solid fa-envelope"></i><a href="#">{{profile.contacts.email}}</a></li>
+                    <li class="phone"><i class="fa-solid fa-phone"></i><a href="#">{{profile.contacts.phone}}</a></li>
+                    <li class="website"><i class="fa-solid fa-globe"></i><a href="" target="_blank">{{profile.contacts.website}}</a></li>
+                    <li class="linkedin"><i class="fa-brands fa-linkedin-in"></i><a href="#" target="_blank">{{profile.contacts.linkedin}}</a></li>
+                    <li class="github"><i class="fa-brands fa-github"></i><a href="#" target="_blank">{{profile.contacts.github}}</a></li>
+                    <li class="twitter"><i class="fa-brands fa-twitter"></i><a href="https://twitter.com/3rdwave_themes" target="_blank">{{profile.contacts.twitter}}</a></li>
                 </ul>
             </div><!--//contact-container-->
             <div class="education-container container-block">

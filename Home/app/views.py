@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User, auth
-
+from django.contrib.auth.hashers import check_password,make_password
 # Create your views here.
 
 @login_required
@@ -54,7 +54,7 @@ def registration(request):
                 return redirect('login')
     return render(request, 'registration.html')
 
-
+@login_required
 def createCV(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -168,13 +168,32 @@ def createCV(request):
 
 
 def createProf(request):
-    return render(request, 'cv_edit.html')
+    profile=Profile.objects.filter(
+        user=request.user
+    ).last()
+    return render(request, 'cv_edit.html',{
+        'profile':profile
+    })
 
 def setting(request):
     return render(request, 'setting.html')
 
 def forgot(request):
     return render(request, 'forgot.html')
+
+def changePassword(request):
+    user = User.objects.get(id=request.user.id)
+    if user.check_password(request.POST['current_password']) and request.POST['password1']==request.POST['password2']:
+        newPassword=make_password(request.POST['password1'])
+        user.password=newPassword
+        user.save()
+        messages.success(request, 'Password Changed Successfully')
+    return redirect('login')
+
+def delete(request,id):
+    user = User.objects.get(id=id)
+    user.delete()
+    return redirect('login')
 
 def logout(request):
     auth.logout(request)
