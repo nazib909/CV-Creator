@@ -127,17 +127,15 @@
                                 placeholder="Degree" name="degree{{forloop.counter}}" aria-describedby="inputGroup-sizing-sm">
                         </div>
                         <div class="input-group-sm">
-                            <input type="text" value="{{edu.institution}}" class="form-control" aria-label="Sizing example input" name="institute{{forloop.counter}}"
-                                placeholder="Institute" aria-describedby="inputGroup-sizing-sm">
+                            <input type="text" value="{{edu.institution}}" class="form-control" aria-label="Sizing example input" 
+                            name="institute{{forloop.counter}}" placeholder="Institute" aria-describedby="inputGroup-sizing-sm">
                         </div>
                         <div class="input-group-sm">
                             <input type="text" value="{{edu.passingyear}}" class="form-control" aria-label="Sizing example input"
                                 name="passingyear{{forloop.counter}}" placeholder="Passing Year" aria-describedby="inputGroup-sizing-sm">
                         </div>
                     </div><!--//item-->
-                    {{forloop.counter}}
                     {% endfor %}
-                    
                 </div><!--//education-container-->
 
                 <div class="languages-container container-block">

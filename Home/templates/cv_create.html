@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/js/fileupload.js' %}"></script>
+    <title>Your CV</title>
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #cv *,
+            #cv {
+                visibility: visible;
+            }
+        }
+    </style>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Responsive HTML5 Resume/CV Template for Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- Google Font -->
+    <link
+        href='https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS-->
+    <script defer src="{% static 'assets/fontawesome/js/all.min.js' %}"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css' %}">
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="{% static 'assets/css/orbit-1.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">CV Creator</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{user.username}}</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Setting</a></li>
+              <li><a class="dropdown-item" href="{% url 'createCV' %}">View My CV</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+    <form action="{% url 'createCV' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="wrapper mt-lg-5" id="cv">
+            <div class="sidebar-wrapper">
+                <div class="profile-container">
+                    <img class="profile img-fluid rounded-circle" id="previewimg"
+                        src="{% static 'assets/images/default.jpg' %}" alt="" />
+                    <div class="mb-3">
+                        <input class="form-control form-control-sm" name="image" id="profileimg" type="file">
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="text" class="form-control" aria-label="Sizing example input"
+                            placeholder="Full Name" name="name" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                    <h3 class="tagline">Full Stack Developer</h3>
+                </div><!--//profile-container-->
+
+                <div class="contact-container container-block">
+                    <ul class="list-unstyled contact-list">
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                placeholder="Email Address" name="email" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="phone"
+                                placeholder="Phone Number" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="portfolio"
+                                placeholder="Portfolio site" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="linkedin"
+                                placeholder="Linked In" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                placeholder="GitHub" name="github" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                placeholder="Twitter" name="twitter" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                    </ul>
+                </div><!--//contact-container-->
+                <div class="education-container container-block">
+                    <h2 class="container-block-title">Education</h2>
+                    <div class="item">
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                placeholder="Degree" name="degree1" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="institute1"
+                                placeholder="Institute" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                name="passingyear1" placeholder="Passing Your" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                    </div><!--//item-->
+                    <div class="item">
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                placeholder="Degree" name="degree2" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="institute2"
+                                placeholder="Institute" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                name="passingyear2" placeholder="Passing Your" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                    </div><!--//item-->
+                </div><!--//education-container-->
+
+                <div class="languages-container container-block">
+                    <h2 class="container-block-title">Languages</h2>
+                    <ul class="list-unstyled interests-list">
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" placeholder="Language" aria-label="First name" class="form-control"
+                                name="language1">
+                            <input type="text" placeholder="Fluency" aria-label="Last name" class="form-control"
+                                name="fluency1">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" placeholder="Language" aria-label="First name" class="form-control"
+                                name="language2">
+                            <input type="text" placeholder="Fluency" aria-label="Last name" class="form-control"
+                                name="fluency2">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" placeholder="Language" aria-label="First name" class="form-control"
+                                name="language3">
+                            <input type="text" placeholder="Fluency" aria-label="Last name" class="form-control"
+                                name="fluency3">
+                        </div>
+                    </ul>
+                </div><!--//interests-->
+
+                <div class="interests-container container-block">
+                    <h2 class="container-block-title">Interests</h2>
+                    <ul class="list-unstyled interests-list">
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="interest1"
+                                placeholder="Interests" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="interest2"
+                                placeholder="Interests" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="interest3"
+                                placeholder="Interests" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                    </ul>
+                </div><!--//interests-->
+
+            </div><!--//sidebar-wrapper-->
+
+            <div class="main-wrapper">
+
+                <section class="section summary-section">
+                    <h2 class="section-title"><span class="icon-holder"><i class="fa-solid fa-user"></i></span>Career
+                        Profile</h2>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Write about your career" id="floatingTextarea2"
+                            name="carrier_profile" style="height: 100px"></textarea>
+                    </div>
+                </section><!--//section-->
+
+                <section class="section experiences-section">
+                    <h2 class="section-title"><span class="icon-holder"><i
+                                class="fa-solid fa-briefcase"></i></span>Experiences</h2>
+
+                    <div class="item">
+                        <div class="input-group">
+                            <input type="text" aria-label="" placeholder="Title" class="form-control" name="title1">
+                            <input type="text" aria-label="" placeholder="Company Name" class="form-control"
+                                name="companyname1">
+                            <input type="text" aria-label="" placeholder="Duration" class="form-control"
+                                name="duration1">
+                        </div>
+                        <div class="details">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="" id="floatingTextarea2" name="details1"
+                                    style="height: 100px"></textarea>
+                            </div>
+                        </div><!--//details-->
+                    </div><!--//item-->
+
+                    <div class="item">
+                        <div class="input-group">
+                            <input type="text" aria-label="" placeholder="Title" class="form-control" name="title2">
+                            <input type="text" aria-label="" placeholder="Company Name" class="form-control"
+                                name="companyname2">
+                            <input type="text" aria-label="" placeholder="Duration" class="form-control"
+                                name="duration2">
+                        </div>
+                        <div class="details">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="" id="floatingTextarea2" name="details2"
+                                    style="height: 100px"></textarea>
+                            </div>
+                        </div><!--//details-->
+                    </div><!--//item-->
+
+                </section><!--//section-->
+
+                <section class="section projects-section">
+                    <h2 class="section-title"><span class="icon-holder"><i
+                                class="fa-solid fa-archive"></i></span>Projects
+                    </h2>
+                    <div class="intro">
+                        <p>You can list your side projects or open source libraries in this section. Lorem ipsum dolor
+                            sit
+                            amet, consectetur adipiscing elit. Vestibulum et ligula in nunc bibendum fringilla a eu
+                            lectus.
+                        </p>
+                    </div><!--//intro-->
+                    <div class="item">
+                        <div class="item">
+                            <div class="input-group">
+                                <input type="text" aria-label="" placeholder="Project Name" name="projectname1"
+                                    class="form-control">
+                            </div>
+                            <div class="details">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="" id="floatingTextarea2"
+                                        name="pdetails1" style="height: 100px"></textarea>
+                                </div>
+                            </div><!--//details-->
+                        </div><!--//item-->
+                    </div><!--//item-->
+                    <div class="item">
+                        <div class="item">
+                            <div class="input-group">
+                                <input type="text" aria-label="" placeholder="Project Name" name="projectname2"
+                                    class="form-control">
+                            </div>
+                            <div class="details">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="" id="floatingTextarea2"
+                                        name="pdetails2" style="height: 100px"></textarea>
+                                </div>
+                            </div><!--//details-->
+                        </div><!--//item-->
+                    </div><!--//item-->
+                    <div class="item">
+                        <div class="item">
+                            <div class="input-group">
+                                <input type="text" aria-label="" placeholder="Project Name" name="projectname3"
+                                    class="form-control">
+                            </div>
+                            <div class="details">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="" id="floatingTextarea2"
+                                        name="pdetails3" style="height: 100px"></textarea>
+                                </div>
+                            </div><!--//details-->
+                        </div><!--//item-->
+                    </div><!--//item-->
+                    <div class="item">
+                        <div class="item">
+                            <div class="input-group">
+                                <input type="text" aria-label="" placeholder="Project Name" name="projectname4"
+                                    class="form-control">
+                            </div>
+                            <div class="details">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="" id="floatingTextarea2"
+                                        name="pdetails4" style="height: 100px"></textarea>
+                                </div>
+                            </div><!--//details-->
+                        </div><!--//item-->
+                    </div><!--//item-->
+                </section><!--//section-->
+
+                <section class="skills-section section">
+                    <h2 class="section-title"><span class="icon-holder"><i class="fa-solid fa-rocket"></i></span>Skills
+                        &amp; Proficiency</h2>
+                    <div class="skillset">
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" placeholder="Skill Name" aria-label="" class="form-control"
+                                name="skill1">
+                            <input type="number" placeholder="Proficiency" aria-label="" class="form-control"
+                                name="proficiency1">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" placeholder="Skill Name" aria-label="" class="form-control"
+                                name="skill2">
+                            <input type="number" placeholder="Proficiency" aria-label="" class="form-control"
+                                name="proficiency2">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" placeholder="Skill Name" aria-label="" class="form-control"
+                                name="skill3">
+                            <input type="number" placeholder="Proficiency" aria-label="" class="form-control"
+                                name="proficiency3">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" placeholder="Skill Name" aria-label="" class="form-control"
+                                name="skill4">
+                            <input type="number" placeholder="Proficiency" aria-label="" class="form-control"
+                                name="proficiency4">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" placeholder="Skill Name" aria-label="" class="form-control"
+                                name="skill5">
+                            <input type="number" placeholder="Proficiency" aria-label="" class="form-control"
+                                name="proficiency5">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" placeholder="Skill Name" aria-label="" class="form-control"
+                                name="skill6">
+                            <input type="number" placeholder="Proficiency" aria-label="" class="form-control"
+                                name="proficiency6">
+                        </div>
+
+                    </div>
+                </section><!--//skills-section-->
+
+            </div><!--//main-body-->
+
+        </div>
+    <footer class="bg-light text-center">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Form -->
+            <section class="">
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center">
+
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary mb-3"> Submit & View </button>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </form>
+            </section>
+            <!-- Section: Form -->
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2023 Copyright:
+            <a class="text-dark" href="">@nazibhossen</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+</body>
+
+</html>

@@ -47,7 +47,7 @@
         </div>
       </nav>
     
-    <div class="wrapper mt-lg-5">
+    <div class="wrapper mt-lg-5" style="min-height: 1200px;">
         <div class="sidebar-wrapper">
             <div class="profile-container">
                 <img class="profile img-fluid rounded-circle" src="{{profile.image.url}}" alt="" />
@@ -65,6 +65,7 @@
                     <li class="twitter"><i class="fa-brands fa-twitter"></i><a href="https://twitter.com/3rdwave_themes" target="_blank">{{profile.contacts.twitter}}</a></li>
                 </ul>
             </div><!--//contact-container-->
+
             <div class="education-container container-block">
                 <h2 class="container-block-title">Education</h2>
                 {% for edu in profile.edus.all %}
@@ -83,7 +84,7 @@
                     <li>{{language.l_name}} <span class="lang-desc">{{language.fluency}}</span></li>
                     {% endfor %}
                 </ul>
-            </div><!--//interests-->
+            </div><!--//languages-->
             
             <div class="interests-container container-block">
                 <h2 class="container-block-title">Interests</h2>
@@ -93,11 +94,9 @@
                     {% endfor %}
                 </ul>
             </div><!--//interests-->
-            
         </div><!--//sidebar-wrapper-->
         
-        <div class="main-wrapper">
-            
+        <div class="main-wrapper" style="min-height: 1200px;">        
             <section class="section summary-section">
                 <h2 class="section-title"><span class="icon-holder"><i class="fa-solid fa-user"></i></span>Career Profile</h2>
                 <div class="summary">
@@ -154,10 +153,9 @@
  
     <footer class="footer">
         <div class="text-center">
-            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
             <small class="copyright">Designed with <i class="fa-solid fa-heart"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-        </div><!--//container-->
-    </footer><!--//footer-->
+        </div>
+    </footer>
         
 </body>
 </html> 
