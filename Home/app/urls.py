@@ -10,6 +10,7 @@ urlpatterns = [
     path('registration/', registration, name='registration'),
     path('createProf/', createProf, name='createProf'),
     path('createCV/', createCV, name='createCV'),
+    path('updateCV/', updateCV, name='updateCV'),
     path('setting/', setting, name='setting'),
     path('logout/', logout, name='logout'),
     path('delete/<id>/', delete, name='delete'),

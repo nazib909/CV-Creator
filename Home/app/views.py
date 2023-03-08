@@ -3,16 +3,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User, auth
-from django.contrib.auth.hashers import check_password,make_password
+from django.contrib.auth.hashers import check_password, make_password
+import os
 # Create your views here.
+
 
 @login_required
 def cv(request):
-    profile=Profile.objects.filter(
+    profile = Profile.objects.filter(
         user=request.user
     ).last()
-    return render(request, 'cv.html',{
-        'profile':profile
+    return render(request, 'cv.html', {
+        'profile': profile
     })
 
 
@@ -53,6 +55,7 @@ def registration(request):
                 messages.success(request, "Profile successfully created")
                 return redirect('login')
     return render(request, 'registration.html')
+
 
 @login_required
 def createCV(request):
@@ -156,7 +159,8 @@ def createCV(request):
             email=email, phone=phone, portfolio=portfolio, linkedin=linkedin, github=github, twitter=twitter)
 
         user = request.user
-        profile = Profile.objects.create(name=name, image=image, carrier_profile=carrier_profile, user=user, contacts=contacts)
+        profile = Profile.objects.create(
+            name=name, image=image, carrier_profile=carrier_profile, user=user, contacts=contacts)
         profile.edus.set(edus)
         profile.skills.set(skills)
         profile.projects.set(projects)
@@ -167,35 +171,68 @@ def createCV(request):
     return redirect('cv')
 
 
+def updateCV(request):
+    profile = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        
+        if request.POST.get('image'):
+            if profile.image:
+                os.remove(profile.image.path)
+            profile.image = image
+            image = request.POST['image']
+        phone = request.POST['phone']
+        protfolio = request.POST['protfolio']
+        carrier_profile = request.POST['carrier_profile']
+
+        profile.name = name
+        profile.email = email
+        profile.image = image
+        profile.phone = phone
+        profile.protfolio = protfolio
+        profile.carrier_profile = carrier_profile
+        profile.save()
+
+        return redirect('cv')
+    
+    return render(request, 'cv_update.html')
+
+
 def createProf(request):
-    profile=Profile.objects.filter(
+    profile = Profile.objects.filter(
         user=request.user
     ).last()
-    return render(request, 'cv_edit.html',{
-        'profile':profile
+    return render(request, 'cv_create.html', {
+        'profile': profile
     })
+
 
 def setting(request):
     return render(request, 'setting.html')
 
+
 def forgot(request):
     return render(request, 'forgot.html')
 
+
 def changePassword(request):
     user = User.objects.get(id=request.user.id)
-    if user.check_password(request.POST['current_password']) and request.POST['password1']==request.POST['password2']:
-        newPassword=make_password(request.POST['password1'])
-        user.password=newPassword
+    if user.check_password(request.POST['current_password']) and request.POST['password1'] == request.POST['password2']:
+        newPassword = make_password(request.POST['password1'])
+        user.password = newPassword
         user.save()
         messages.success(request, 'Password Changed Successfully')
     return redirect('login')
 
-def delete(request,id):
+
+def delete(request, id):
     user = User.objects.get(id=id)
     user.delete()
     return redirect('login')
 
+
 def logout(request):
     auth.logout(request)
-    messages.success(request,'Logout Successfully')
+    messages.success(request, 'Logout Successfully')
     return redirect(login)

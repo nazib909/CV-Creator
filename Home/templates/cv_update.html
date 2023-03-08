@@ -47,7 +47,7 @@
 <body>
 <!-- Navbar-->
 <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
+    <div class="container-fluid" >
       <a class="navbar-brand" href="#">CV Creator</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -58,10 +58,11 @@
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{user.username}}</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'setting' %}">Setting</a></li>
-              <li><a class="dropdown-item" href="{% url 'createCV' %}">View My CV</a></li>
+              <li><a class="dropdown-item" href="{% url 'cv' %}">View My CV</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             </ul>
+            
           </li>
         </ul>
       </div>
@@ -69,10 +70,10 @@
   </nav>
 
 
-    <form action="{% url 'createCV' %}" method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="wrapper mt-lg-5" id="cv">
-            <div class="sidebar-wrapper">
+        <div class="wrapper mt-lg-5" id="cv" style="min-height: 1200px">
+            <div class="sidebar-wrapper" >
                 <div class="profile-container">
                     <!-- <img class="profile img-fluid rounded-circle" id="previewimg" src="{{profile.image.url}}"  alt="" /> -->
                     {% if profile.image %}
@@ -85,9 +86,8 @@
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <input type="text" value="{{profile.name}}" class="form-control" aria-label="Sizing example input"
-                            placeholder="Full Name" name="name" aria-describedby="inputGroup-sizing-sm">
+                            placeholder="" name="name" aria-describedby="inputGroup-sizing-sm">
                     </div>
-                    <h3 class="tagline">Full Stack Developer</h3>
                 </div><!--//profile-container-->
 
                 <div class="contact-container container-block">
@@ -120,22 +120,34 @@
                 </div><!--//contact-container-->
                 <div class="education-container container-block">
                     <h2 class="container-block-title">Education</h2>
-                    {% for edu in profile.edus.all %}
                     <div class="item">
                         <div class="input-group-sm">
-                            <input type="text" value="{{edu.degree}}" class="form-control" aria-label="Sizing example input"
-                                placeholder="Degree" name="degree{{forloop.counter}}" aria-describedby="inputGroup-sizing-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                placeholder="Degree" name="degree1" aria-describedby="inputGroup-sizing-sm">
                         </div>
                         <div class="input-group-sm">
-                            <input type="text" value="{{edu.institution}}" class="form-control" aria-label="Sizing example input" 
-                            name="institute{{forloop.counter}}" placeholder="Institute" aria-describedby="inputGroup-sizing-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="institute1"
+                                placeholder="Institute" aria-describedby="inputGroup-sizing-sm">
                         </div>
                         <div class="input-group-sm">
-                            <input type="text" value="{{edu.passingyear}}" class="form-control" aria-label="Sizing example input"
-                                name="passingyear{{forloop.counter}}" placeholder="Passing Year" aria-describedby="inputGroup-sizing-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                name="passingyear1" placeholder="Passing Your" aria-describedby="inputGroup-sizing-sm">
                         </div>
                     </div><!--//item-->
-                    {% endfor %}
+                    <div class="item">
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                placeholder="Degree" name="degree2" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input" name="institute2"
+                                placeholder="Institute" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                name="passingyear2" placeholder="Passing Your" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                    </div><!--//item-->
                 </div><!--//education-container-->
 
                 <div class="languages-container container-block">

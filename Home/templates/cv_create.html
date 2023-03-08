@@ -59,6 +59,7 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Setting</a></li>
               <li><a class="dropdown-item" href="{% url 'createCV' %}">View My CV</a></li>
+              <li><a class="dropdown-item" href="{% url 'updateCV' %}">Update My CV</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             </ul>
@@ -83,7 +84,7 @@
                         <input type="text" class="form-control" aria-label="Sizing example input"
                             placeholder="Full Name" name="name" aria-describedby="inputGroup-sizing-sm">
                     </div>
-                    <h3 class="tagline">Full Stack Developer</h3>
+                    <!-- <h3 class="tagline">Full Stack Developer</h3> -->
                 </div><!--//profile-container-->
 
                 <div class="contact-container container-block">
@@ -98,7 +99,7 @@
                         </div>
                         <div class="input-group input-group-sm mb-3">
                             <input type="text" class="form-control" aria-label="Sizing example input" name="portfolio"
-                                placeholder="Portfolio site" aria-describedby="inputGroup-sizing-sm">
+                                placeholder="Portfolio site" aria-describedby="inputGroup-sizing-sm"> <!--Problem-->
                         </div>
                         <div class="input-group input-group-sm mb-3">
                             <input type="text" class="form-control" aria-label="Sizing example input" name="linkedin"
