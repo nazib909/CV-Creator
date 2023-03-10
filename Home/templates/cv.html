@@ -50,7 +50,11 @@
     <div class="wrapper mt-lg-5" style="min-height: 1200px;" >
         <div class="sidebar-wrapper">
             <div class="profile-container">
-                <img class="profile img-fluid rounded-circle" src="{{profile.image.url}}" alt="" />
+                {% if profile.image %}
+                        <img class="profile img-fluid rounded-circle" id="previewimg" src="{{profile.image.url}}"  alt="" />
+                    {% else %}
+                        <img class="profile img-fluid rounded-circle" id="previewimg" src="{% static 'assets/images/default.jpg' %}"  alt="" />
+                    {% endif %}
                 <h1 class="name">{{profile.name}}</h1>
                 <!-- <h3 class="tagline">Full Stack Developer</h3> -->
             </div><!--//profile-container-->

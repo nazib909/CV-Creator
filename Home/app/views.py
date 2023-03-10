@@ -174,29 +174,23 @@ def createCV(request):
 def updateCV(request):
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
-        name = request.POST['name']
-        email = request.POST['email']
-        
-        if request.POST.get('image'):
+        profile.name = request.POST['name']
+        profile.email = request.POST['email']
+
+        if request.FILES.get('image'):
             if profile.image:
                 os.remove(profile.image.path)
-            profile.image = image
-            image = request.POST['image']
-        phone = request.POST['phone']
-        protfolio = request.POST['protfolio']
-        carrier_profile = request.POST['carrier_profile']
+            profile.image = request.FILES['image']
 
-        profile.name = name
-        profile.email = email
-        profile.image = image
-        profile.phone = phone
-        profile.protfolio = protfolio
-        profile.carrier_profile = carrier_profile
+        profile.phone = request.POST['phone']
+        profile.protfolio = request.POST['portfolio']
+        profile.carrier_profile = request.POST.get('carrier_profile')
+
         profile.save()
 
         return redirect('cv')
     
-    return render(request, 'cv_update.html')
+    return render(request, 'cv_update.html',{'profile':profile})
 
 
 def createProf(request):

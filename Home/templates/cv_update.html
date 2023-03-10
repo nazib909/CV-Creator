@@ -75,7 +75,6 @@
         <div class="wrapper mt-lg-5" id="cv" style="min-height: 1200px">
             <div class="sidebar-wrapper" >
                 <div class="profile-container">
-                    <!-- <img class="profile img-fluid rounded-circle" id="previewimg" src="{{profile.image.url}}"  alt="" /> -->
                     {% if profile.image %}
                         <img class="profile img-fluid rounded-circle" id="previewimg" src="{{profile.image.url}}"  alt="" />
                     {% else %}
@@ -197,11 +196,10 @@
             <div class="main-wrapper">
 
                 <section class="section summary-section">
-                    <h2 class="section-title"><span class="icon-holder"><i class="fa-solid fa-user"></i></span>Career
-                        Profile</h2>
+                    <h2 class="section-title"><span class="icon-holder"><i class="fa-solid fa-user"></i></span>Career Profile</h2>
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Write about your career" id="floatingTextarea2"
-                            name="carrier_profile" style="height: 100px">{{profile.carrier_profile}}</textarea> <!---কনটেন্ট টেক্সট এরিয়া এর মাঝে বসে -->
+                            name="carrier_profile" style="height: 100px">{{profile.carrier_profile}}</textarea>
                     </div>
                 </section><!--//section-->
 
