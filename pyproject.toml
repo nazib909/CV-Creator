@@ -1,0 +1,4 @@
+[tool.black]
+line-length = 88  # Specify your desired line length, you can adjust it as needed
+target-version = ['py37', 'py38', 'py39']  # You can choose the Python versions you're targeting
+single-quote = true  # This option makes Black use single quotes
