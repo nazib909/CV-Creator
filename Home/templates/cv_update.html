@@ -121,7 +121,7 @@
                     <h2 class="container-block-title">Education</h2>
                     <div class="item">
                         <div class="input-group-sm">
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" value="" class="form-control" aria-label="Sizing example input"
                                 placeholder="Degree" name="degree1" aria-describedby="inputGroup-sizing-sm">
                         </div>
                         <div class="input-group-sm">
@@ -153,21 +153,21 @@
                     <h2 class="container-block-title">Languages</h2>
                     <ul class="list-unstyled interests-list">
                         <div class="input-group input-group-sm mb-3">
-                            <input type="text" value="{{languages.name}}" placeholder="Language" aria-label="First name" class="form-control"
+                            <input type="text" value="{% if languages and languages.0 %}{{ languages.0.l_name }}{% endif %}" class="form-control"
                                 name="language1">
-                            <input type="text" placeholder="Fluency" aria-label="Last name" class="form-control"
+                            <input type="text" value="{% if languages and languages.0 %}{{ languages.0.fluency }}{% endif %}" class="form-control"
                                 name="fluency1">
                         </div>
                         <div class="input-group input-group-sm mb-3">
-                            <input type="text" placeholder="Language" aria-label="First name" class="form-control"
+                            <input type="text" value="{% if languages and languages.1 %}{{ languages.1.l_name }}{% endif %}" class="form-control"
                                 name="language2">
-                            <input type="text" placeholder="Fluency" aria-label="Last name" class="form-control"
+                            <input type="text" value="{% if languages and languages.1 %}{{ languages.1.fluency }}{% endif %}" class="form-control"
                                 name="fluency2">
                         </div>
                         <div class="input-group input-group-sm mb-3">
-                            <input type="text" placeholder="Language" aria-label="First name" class="form-control"
+                            <input type="text" value="{% if languages and languages.2 %}{{ languages.2.l_name }}{% endif %}" class="form-control"
                                 name="language3">
-                            <input type="text" placeholder="Fluency" aria-label="Last name" class="form-control"
+                            <input type="text" value="{% if languages and languages.2 %}{{ languages.2.fluency }}{% endif %}" class="form-control"
                                 name="fluency3">
                         </div>
                     </ul>
@@ -245,13 +245,7 @@
                     <h2 class="section-title"><span class="icon-holder"><i
                                 class="fa-solid fa-archive"></i></span>Projects
                     </h2>
-                    <div class="intro">
-                        <p>You can list your side projects or open source libraries in this section. Lorem ipsum dolor
-                            sit
-                            amet, consectetur adipiscing elit. Vestibulum et ligula in nunc bibendum fringilla a eu
-                            lectus.
-                        </p>
-                    </div><!--//intro-->
+                    
                     <div class="item">
                         <div class="item">
                             <div class="input-group">

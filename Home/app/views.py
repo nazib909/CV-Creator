@@ -171,8 +171,31 @@ def createCV(request):
     return redirect('cv')
 
 
+# def updateCV(request):
+#     profile = Profile.objects.get(user=request.user)
+#     if request.method == 'POST':
+#         profile.name = request.POST['name']
+#         profile.email = request.POST['email']
+
+#         if request.FILES.get('image'):
+#             if profile.image:
+#                 os.remove(profile.image.path)
+#             profile.image = request.FILES['image']
+
+#         profile.phone = request.POST['phone']
+#         profile.protfolio = request.POST['portfolio']
+#         profile.carrier_profile = request.POST.get('carrier_profile')
+
+#         profile.save()
+
+#         return redirect('cv')
+    
+#     return render(request, 'cv_update.html',{'profile':profile})
+
 def updateCV(request):
     profile = Profile.objects.get(user=request.user)
+    languages = profile.languages.all()
+
     if request.method == 'POST':
         profile.name = request.POST['name']
         profile.email = request.POST['email']
@@ -183,14 +206,26 @@ def updateCV(request):
             profile.image = request.FILES['image']
 
         profile.phone = request.POST['phone']
-        profile.protfolio = request.POST['portfolio']
+        profile.portfolio = request.POST['portfolio']
         profile.carrier_profile = request.POST.get('carrier_profile')
 
+        # Save profile changes
         profile.save()
+
+        # Update language section
+        for i, language in enumerate(languages):
+            language_name = request.POST.get('language_name[]')[i]
+            fluency_level = request.POST.get('fluency[]')[i]
+
+            language.l_name = language_name
+            language.fluency = fluency_level
+            language.save()
 
         return redirect('cv')
     
-    return render(request, 'cv_update.html',{'profile':profile})
+    return render(request, 'cv_update.html', {'profile': profile, 'languages': languages})
+
+
 
 
 def createProf(request):
